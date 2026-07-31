@@ -1,0 +1,1980 @@
+
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>REVIA — Screens 8–14</title>
+<style>
+/* ============================================================
+   REVIA — Deep Forest Circularity Design System
+   Screens 8–14 | Part 2 of mobile app UI
+   ============================================================
+   Palette:
+     Primary:    #1B4332
+     Secondary:  #40916C
+     Accent:     #D9A441
+     Background: #F4F1EA
+     Text dark:  #1B1B1B
+     Text muted: #6B7280
+     Success:    #52B788
+     Alert:      #E07A5F
+   ============================================================ */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary:    #1B4332;
+    --primary-md: #2D6A4F;
+    --secondary:  #40916C;
+    --accent:     #D9A441;
+    --accent-lt:  #F5E6C0;
+    --bg:         #F4F1EA;
+    --surface:    #FFFFFF;
+    --surface2:   #EEF0EB;
+    --border:     #D8DDD5;
+    --text:       #1B1B1B;
+    --muted:      #6B7280;
+    --success:    #52B788;
+    --success-lt: #D8F0E5;
+    --alert:      #E07A5F;
+    --alert-lt:   #FAE5DF;
+    --r16: 16px;
+    --r20: 20px;
+    --shadow-sm: 0 2px 8px rgba(27,67,50,0.08);
+    --shadow-md: 0 4px 20px rgba(27,67,50,0.13);
+    --shadow-lg: 0 8px 36px rgba(27,67,50,0.18);
+    --font: -apple-system, "Segoe UI", "Inter", system-ui, sans-serif;
+  }
+
+  body {
+    background: #2D4A3A;
+    font-family: var(--font);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    padding: 48px 32px 72px;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  /* ── Phone shell ── */
+  .phone-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .screen-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(244,241,234,0.45);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .phone {
+    width: 375px;
+    height: 812px;
+    background: var(--bg);
+    border-radius: 46px;
+    box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(255,255,255,0.45);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  /* Notch */
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 126px; height: 30px;
+    background: #111;
+    border-radius: 0 0 20px 20px;
+    z-index: 50;
+  }
+
+  /* Status bar */
+  .status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 28px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 5;
+  }
+  .status.on-dark { color: rgba(255,255,255,0.88); }
+
+  /* Scrollable body */
+  .body {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .body::-webkit-scrollbar { display: none; }
+
+  /* Bottom nav */
+  .nav {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex;
+    padding: 10px 0 22px;
+    flex-shrink: 0;
+  }
+  .ni {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+  }
+  .ni-icon { font-size: 19px; line-height: 1; }
+  .ni-lbl  { font-size: 9px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .ni.active .ni-lbl { color: var(--secondary); }
+  .ni-dot  { width: 4px; height: 4px; border-radius: 50%; background: var(--secondary); }
+
+  /* ── Shared components ── */
+  .topbar {
+    background: var(--surface);
+    padding: 14px 20px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .topbar-back { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .topbar-title { font-size: 16px; font-weight: 800; color: var(--text); }
+  .topbar-action { font-size: 12px; font-weight: 700; color: var(--secondary); }
+
+  .sec-hdr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px 8px;
+    flex-shrink: 0;
+  }
+  .sec-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+  }
+  .sec-link { font-size: 12px; font-weight: 700; color: var(--secondary); }
+
+  .divider { height: 8px; background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .spacer-sm { height: 10px; flex-shrink: 0; }
+  .spacer-md { height: 18px; flex-shrink: 0; }
+
+  /* Pill chip */
+  .chip {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .chip-green  { background: var(--success-lt); color: var(--primary); }
+  .chip-gold   { background: var(--accent-lt);  color: #7A5000; }
+  .chip-alert  { background: var(--alert-lt);   color: #8B2500; }
+  .chip-muted  { background: var(--surface2);   color: var(--muted); }
+  .chip-dark   { background: var(--primary);    color: #fff; }
+
+  /* Primary CTA button */
+  .btn-primary {
+    display: block;
+    width: calc(100% - 40px);
+    margin: 0 20px;
+    background: var(--secondary);
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    border-radius: var(--r16);
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    box-shadow: 0 4px 14px rgba(64,145,108,0.35);
+  }
+  .btn-secondary {
+    display: block;
+    width: calc(100% - 40px);
+    margin: 10px 20px 0;
+    background: var(--surface);
+    color: var(--text);
+    text-align: center;
+    padding: 13px;
+    border-radius: var(--r16);
+    font-size: 14px;
+    font-weight: 700;
+    border: 1.5px solid var(--border);
+  }
+
+
+  /* ============================================================
+     SCREEN 8 — Decision Engine Loading
+     Animated pulsing network nodes
+     ============================================================ */
+
+  /* Node pulse keyframe */
+  @keyframes nodePulse {
+    0%,100% { r: 10; opacity: 1; }
+    50%      { r: 14; opacity: 0.65; }
+  }
+  /* Outer ring expand */
+  @keyframes ringExpand {
+    0%   { r: 12; opacity: 0.6; }
+    100% { r: 28; opacity: 0; }
+  }
+  /* Dot travel along path */
+  @keyframes dashTravel {
+    0%   { stroke-dashoffset: 120; }
+    100% { stroke-dashoffset: 0; }
+  }
+  /* Spinner arc */
+  @keyframes spinArc {
+    0%   { stroke-dashoffset: 240; }
+    50%  { stroke-dashoffset: 60; }
+    100% { stroke-dashoffset: 240; }
+  }
+  /* Progress bar fill */
+  @keyframes progressFill {
+    0%   { width: 5%; }
+    60%  { width: 75%; }
+    80%  { width: 82%; }
+    100% { width: 88%; }
+  }
+  /* Label blink */
+  @keyframes dotBlink {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.2; }
+  }
+
+  .de-bg {
+    flex: 1;
+    background: linear-gradient(160deg, var(--primary) 0%, var(--primary-md) 60%, #2D6A4F 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 20px 0;
+  }
+  .de-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .de-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .de-svg-wrap {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Animated nodes */
+  .node-pulse { animation: nodePulse 2s ease-in-out infinite; }
+  .node-pulse-d1 { animation: nodePulse 2s ease-in-out 0.3s infinite; }
+  .node-pulse-d2 { animation: nodePulse 2s ease-in-out 0.6s infinite; }
+  .node-pulse-d3 { animation: nodePulse 2s ease-in-out 0.9s infinite; }
+  .ring-expand  { animation: ringExpand 2s ease-out infinite; }
+  .ring-expand-d1 { animation: ringExpand 2s ease-out 0.7s infinite; }
+  .dash-travel  { animation: dashTravel 2.5s ease-in-out infinite; }
+  .dash-travel-d1 { animation: dashTravel 2.5s ease-in-out 0.5s infinite; }
+  .dash-travel-d2 { animation: dashTravel 2.5s ease-in-out 1.0s infinite; }
+  .dash-travel-d3 { animation: dashTravel 2.5s ease-in-out 1.5s infinite; }
+  .spin-arc     { animation: spinArc 2.4s ease-in-out infinite; }
+
+  .de-progress-wrap {
+    width: calc(100% - 40px);
+    margin: 0 20px 20px;
+    background: var(--surface);
+    border-radius: var(--r16);
+    padding: 16px;
+  }
+  .de-progress-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .blink-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--secondary);
+    animation: dotBlink 1s ease-in-out infinite;
+  }
+  .progress-track {
+    height: 8px;
+    background: var(--surface2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary), var(--accent));
+    border-radius: 4px;
+    animation: progressFill 3.5s ease-out forwards;
+  }
+  .progress-steps {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+
+  /* ============================================================
+     SCREEN 9 — Recovery Recommendation
+     ============================================================ */
+
+  .rec-hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-md) 100%);
+    padding: 16px 20px 20px;
+    flex-shrink: 0;
+  }
+  .rec-hero-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 4px;
+  }
+  .rec-hero-title { font-size: 19px; font-weight: 800; color: #fff; }
+  .rec-hero-sub   { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+  .rec-hero-pills { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .rec-hero-pill  {
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* Path card */
+  .path-card {
+    margin: 0 20px 12px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r20);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .path-card.top-pick {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(217,164,65,0.18), var(--shadow-md);
+  }
+  .path-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .path-rank {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .path-rank.gold { color: #7A5000; }
+  .path-mitra-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px 10px;
+  }
+  .mitra-icon {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .mi-green { background: var(--success-lt); }
+  .mi-blue  { background: #DCEAF2; }
+  .mi-earth { background: #F0E8DC; }
+  .mitra-name  { font-size: 14px; font-weight: 800; color: var(--text); }
+  .mitra-type  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  .path-score-badge {
+    margin-left: auto;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .psb-val {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .psb-val.green { color: var(--secondary); }
+  .psb-val.amber { color: var(--accent); }
+  .psb-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .path-stats {
+    display: flex;
+    padding: 0 16px 12px;
+    gap: 0;
+  }
+  .ps-item {
+    flex: 1;
+    border-right: 1px solid var(--border);
+    padding: 0 10px;
+    text-align: center;
+  }
+  .ps-item:first-child { padding-left: 0; }
+  .ps-item:last-child  { border-right: none; padding-right: 0; }
+  .ps-val   { font-size: 13px; font-weight: 800; color: var(--text); }
+  .ps-label { font-size: 9px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 1px; }
+
+  .path-reason {
+    background: var(--bg);
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .path-reason strong { color: var(--primary); }
+
+
+  /* ============================================================
+     SCREEN 10 — Matching / Pickup Animation
+     ============================================================ */
+
+  @keyframes truckMove {
+    0%   { offset-distance: 0%; }
+    100% { offset-distance: 100%; }
+  }
+  /* SVG-based truck translation along path */
+  @keyframes truckX {
+    0%   { transform: translateX(0px); }
+    100% { transform: translateX(220px); }
+  }
+  /* Status step highlight */
+  @keyframes statusPop {
+    0%,100% { transform: scale(1); }
+    50%      { transform: scale(1.04); }
+  }
+  @keyframes statusAdvance {
+    0%,33%   { opacity: 1; }
+    40%,100% { opacity: 0.35; }
+  }
+  @keyframes statusAdvance2 {
+    0%,40%   { opacity: 0.35; }
+    50%,75%  { opacity: 1; }
+    80%,100% { opacity: 0.35; }
+  }
+  @keyframes statusAdvance3 {
+    0%,75%   { opacity: 0.35; }
+    85%,100% { opacity: 1; }
+  }
+  @keyframes dashDraw {
+    0%   { stroke-dashoffset: 300; }
+    100% { stroke-dashoffset: 0; }
+  }
+
+  .pickup-map {
+    margin: 0 20px;
+    background: #EAF0EC;
+    border: 1px solid var(--border);
+    border-radius: var(--r20);
+    overflow: hidden;
+    position: relative;
+    height: 190px;
+  }
+  .moving-truck {
+    animation: truckX 3s ease-in-out infinite alternate;
+    display: inline-block;
+  }
+  .route-dash {
+    stroke-dasharray: 10 6;
+    animation: dashDraw 2s ease-in-out infinite;
+  }
+
+  .status-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px 20px;
+    position: relative;
+  }
+  .status-steps::before {
+    content: '';
+    position: absolute;
+    top: 26px;
+    left: 48px;
+    right: 48px;
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+  }
+  .sts-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    z-index: 1;
+  }
+  .sts-circle {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .sts-circle.done  { background: var(--secondary); border-color: var(--secondary); color: #fff; }
+  .sts-circle.active{ background: var(--accent);    border-color: var(--accent);    color: #fff; animation: statusPop 1.8s ease-in-out infinite; }
+  .sts-lbl { font-size: 10px; font-weight: 700; color: var(--muted); text-align: center; max-width: 70px; line-height: 1.3; }
+  .sts-lbl.active { color: var(--accent); }
+  .sts-lbl.done   { color: var(--secondary); }
+
+  .pickup-detail-card {
+    margin: 0 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r16);
+    padding: 14px 16px;
+  }
+  .pdc-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .pdc-row:last-child { border-bottom: none; }
+  .pdc-label { color: var(--muted); font-weight: 500; }
+  .pdc-val   { font-weight: 700; color: var(--text); }
+  .pdc-val.green { color: var(--secondary); }
+
+
+  /* ============================================================
+     SCREEN 11 — Resource Processing Timeline
+     ============================================================ */
+
+  @keyframes arrowBounce {
+    0%,100% { transform: translateX(0); }
+    50%      { transform: translateX(4px); }
+  }
+  @keyframes iconGlow {
+    0%,100% { box-shadow: 0 0 0 0 rgba(82,183,136,0); }
+    50%      { box-shadow: 0 0 0 8px rgba(82,183,136,0.18); }
+  }
+
+  .process-bg {
+    background: linear-gradient(175deg, var(--primary) 0%, #1B4332 35%, var(--bg) 35%);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .process-header {
+    padding: 16px 20px 24px;
+  }
+  .process-header-title { font-size: 18px; font-weight: 800; color: #fff; }
+  .process-header-sub   { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+  .timeline-wrap {
+    flex: 1;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .tl-step {
+    display: flex;
+    gap: 16px;
+    position: relative;
+    padding-bottom: 0;
+  }
+  .tl-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 52px;
+  }
+  .tl-icon-wrap {
+    width: 52px; height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+  .tl-icon-wrap.done   { background: var(--success-lt); animation: iconGlow 2.5s ease-in-out infinite; }
+  .tl-icon-wrap.active { background: var(--accent-lt); }
+  .tl-icon-wrap.next   { background: var(--surface2); opacity: 0.7; }
+  .tl-connector {
+    width: 2px;
+    flex: 1;
+    min-height: 24px;
+    background: var(--border);
+    margin: 4px 0;
+  }
+  .tl-connector.done { background: var(--success); }
+  .tl-body {
+    flex: 1;
+    padding: 4px 0 24px;
+  }
+  .tl-title { font-size: 15px; font-weight: 800; color: var(--text); }
+  .tl-title.muted { color: var(--muted); }
+  .tl-sub   { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+  .tl-tags  { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+
+  .tl-output-box {
+    margin-top: 10px;
+    background: var(--success-lt);
+    border: 1px solid var(--success);
+    border-radius: var(--r16);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tl-output-val { font-size: 16px; font-weight: 800; color: var(--primary); }
+  .tl-output-label { font-size: 11px; color: var(--secondary); font-weight: 600; }
+
+  .arrow-bounce { animation: arrowBounce 1.4s ease-in-out infinite; display: inline-block; }
+
+
+  /* ============================================================
+     SCREEN 12 — Second Matching (Kasgot → Petani)
+     Reuses pickup animation styles + new petani palette
+     ============================================================ */
+
+  .second-match-hero {
+    background: linear-gradient(135deg, #4A3728 0%, #7A5000 100%);
+    padding: 16px 20px 18px;
+    flex-shrink: 0;
+  }
+  .smh-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.55); margin-bottom: 4px; }
+  .smh-title { font-size: 18px; font-weight: 800; color: #fff; }
+  .smh-sub   { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+
+  .flow-chain {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r16);
+    padding: 12px 14px;
+  }
+  .fc-node {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .fc-icon  { font-size: 22px; }
+  .fc-name  { font-size: 10px; font-weight: 700; color: var(--text); text-align: center; }
+  .fc-arrow {
+    font-size: 16px;
+    color: var(--accent);
+    flex-shrink: 0;
+    animation: arrowBounce 1.6s ease-in-out infinite;
+  }
+
+  .sm-map {
+    margin: 12px 20px 0;
+    background: #EDF5EE;
+    border: 1px solid var(--border);
+    border-radius: var(--r20);
+    overflow: hidden;
+    height: 175px;
+  }
+  .petani-benefit {
+    margin: 12px 20px 0;
+    background: var(--accent-lt);
+    border: 1.5px solid var(--accent);
+    border-radius: var(--r16);
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .pb-icon { font-size: 28px; flex-shrink: 0; }
+  .pb-title { font-size: 14px; font-weight: 800; color: #4A3000; }
+  .pb-body  { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.55; }
+
+
+  /* ============================================================
+     SCREEN 13 — Environmental Impact Portfolio
+     Circular progress ring animation
+     ============================================================ */
+
+  @keyframes ringDraw {
+    0%   { stroke-dashoffset: 502; }
+    100% { stroke-dashoffset: 105; }
+  }
+  @keyframes countUp {
+    0%   { opacity: 0; transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .impact-hero {
+    background: linear-gradient(150deg, var(--primary) 0%, var(--primary-md) 100%);
+    padding: 18px 20px 22px;
+    flex-shrink: 0;
+  }
+  .ih-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 4px; }
+  .ih-title { font-size: 19px; font-weight: 800; color: #fff; }
+  .ih-sub   { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+  .ring-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .ring-wrap { position: relative; width: 110px; height: 110px; flex-shrink: 0; }
+  .ring-svg  { width: 110px; height: 110px; }
+  .ring-track { fill: none; stroke: var(--surface2); stroke-width: 12; }
+  .ring-fill  {
+    fill: none;
+    stroke: var(--secondary);
+    stroke-width: 12;
+    stroke-linecap: round;
+    stroke-dasharray: 502;
+    stroke-dashoffset: 502;
+    transform: rotate(-90deg);
+    transform-origin: 55px 55px;
+    animation: ringDraw 2.8s cubic-bezier(0.4,0,0.2,1) 0.3s forwards;
+  }
+  .ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .ring-val   { font-size: 24px; font-weight: 900; color: var(--primary); line-height: 1; animation: countUp 0.6s ease-out 0.5s both; }
+  .ring-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-top: 1px; }
+  .ring-meta  { flex: 1; }
+  .ring-meta-title { font-size: 15px; font-weight: 800; color: var(--text); }
+  .ring-meta-sub   { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+  .ring-meta-bar-wrap { margin-top: 10px; }
+  .ring-meta-bar-label { font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 4px; display: flex; justify-content: space-between; }
+  .ring-bar-track { height: 7px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .ring-bar-fill  { height: 100%; border-radius: 4px; background: var(--secondary); animation: progressFill 2.5s ease-out 0.5s both; }
+
+  /* Stat tiles */
+  .impact-tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 14px 20px 0;
+    flex-shrink: 0;
+  }
+  .impact-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r16);
+    padding: 14px 12px;
+    box-shadow: var(--shadow-sm);
+  }
+  .it-icon  { font-size: 20px; margin-bottom: 5px; }
+  .it-val   { font-size: 19px; font-weight: 900; color: var(--text); line-height: 1; }
+  .it-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 3px; }
+  .it-delta { font-size: 11px; font-weight: 700; color: var(--success); margin-top: 4px; }
+
+  /* Horizontal journey diagram */
+  .journey-section { padding: 14px 20px 0; flex-shrink: 0; }
+  .journey-scroll  { display: flex; gap: 0; align-items: center; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+  .journey-scroll::-webkit-scrollbar { display: none; }
+  .journey-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    width: 72px;
+  }
+  .jn-icon-wrap {
+    width: 44px; height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .jn-done   { background: var(--success-lt); }
+  .jn-active { background: var(--accent-lt); }
+  .jn-future { background: var(--surface2); opacity: 0.6; }
+  .jn-label  { font-size: 9px; font-weight: 700; color: var(--muted); text-align: center; line-height: 1.3; }
+  .journey-arrow {
+    font-size: 14px;
+    color: var(--secondary);
+    flex-shrink: 0;
+    padding: 0 2px;
+    animation: arrowBounce 1.8s ease-in-out infinite;
+  }
+
+  /* SDG badges */
+  .sdg-row { display: flex; gap: 10px; padding: 14px 20px 0; flex-shrink: 0; }
+  .sdg-badge {
+    flex: 1;
+    border-radius: var(--r16);
+    padding: 12px 8px;
+    text-align: center;
+  }
+  .sdg-num   { font-size: 22px; font-weight: 900; color: #fff; line-height: 1; }
+  .sdg-title { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.85); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.3; }
+  .sdg-11 { background: #F99D26; }
+  .sdg-12 { background: #BF8B2E; }
+  .sdg-13 { background: #3F7E44; }
+
+
+  /* ============================================================
+     SCREEN 14 — Profile / Settings
+     ============================================================ */
+
+  .profile-hero {
+    background: linear-gradient(140deg, var(--primary) 0%, var(--primary-md) 100%);
+    padding: 24px 20px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .profile-avatar {
+    width: 64px; height: 64px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.22);
+    border: 3px solid rgba(255,255,255,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .profile-info { flex: 1; }
+  .profile-name   { font-size: 18px; font-weight: 800; color: #fff; }
+  .profile-handle { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 1px; }
+  .profile-badges { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .profile-badge  {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* Mini impact row */
+  .profile-stats {
+    display: flex;
+    background: var(--primary);
+    flex-shrink: 0;
+  }
+  .pst-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px 6px 12px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .pst-item:last-child { border-right: none; }
+  .pst-val   { font-size: 15px; font-weight: 900; color: #fff; line-height: 1; }
+  .pst-label { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.55); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.03em; }
+
+  /* Impact history */
+  .history-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    flex-shrink: 0;
+  }
+  .hi-icon {
+    width: 38px; height: 38px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .hi-body { flex: 1; }
+  .hi-title { font-size: 13px; font-weight: 700; color: var(--text); }
+  .hi-sub   { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .hi-val   { font-size: 13px; font-weight: 800; color: var(--secondary); flex-shrink: 0; }
+
+  /* Settings list */
+  .settings-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    flex-shrink: 0;
+  }
+  .si-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; flex-shrink: 0;
+  }
+  .si-label { flex: 1; font-size: 14px; font-weight: 600; color: var(--text); }
+  .si-arrow { font-size: 12px; color: var(--muted); }
+  .si-val   { font-size: 12px; color: var(--muted); margin-right: 6px; }
+
+  /* Toggle */
+  .toggle {
+    width: 36px; height: 20px;
+    background: var(--secondary);
+    border-radius: 10px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px; right: 3px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #fff;
+  }
+  .toggle.off {
+    background: var(--border);
+  }
+  .toggle.off::after { right: auto; left: 3px; }
+
+  /* Logout button */
+  .btn-logout {
+    display: block;
+    width: calc(100% - 40px);
+    margin: 16px 20px;
+    background: var(--alert-lt);
+    color: var(--alert);
+    text-align: center;
+    padding: 13px;
+    border-radius: var(--r16);
+    font-size: 14px;
+    font-weight: 700;
+    border: 1.5px solid var(--alert);
+  }
+
+</style>
+</head>
+<body>
+
+
+<div class="phone-wrap">
+  <div class="screen-label">08 — Decision Engine Loading</div>
+  <div class="phone">
+    
+    <div class="status on-dark" style="background:transparent;position:relative;z-index:10">
+      <span>9:41</span>
+      <span style="font-size:10px;color:rgba(255,255,255,0.75)">▲▲▲ WiFi 100%</span>
+    </div>
+
+    <div class="body">
+      
+      <div class="de-bg">
+        <div class="de-title">Menganalisis Resource</div>
+        <div class="de-sub">Decision Engine sedang bekerja…</div>
+
+        
+        <div class="de-svg-wrap">
+          <svg width="310" height="310" aria-label="Jaringan node Decision Engine">
+
+            
+            
+            <line x1="155" y1="155" x2="155" y2="55" stroke="rgba(82,183,136,0.35)" stroke-width="1.5"></line>
+            <circle cx="155" cy="100" r="4" fill="#52B788" opacity="0.9">
+              
+              
+            </circle>
+
+            
+            <line x1="155" y1="155" x2="60" y2="245" stroke="rgba(82,183,136,0.35)" stroke-width="1.5"></line>
+            <circle cx="107" cy="200" r="4" fill="#52B788" opacity="0.9">
+              
+              
+              
+            </circle>
+
+            
+            <line x1="155" y1="155" x2="250" y2="245" stroke="rgba(82,183,136,0.35)" stroke-width="1.5"></line>
+            <circle r="4" fill="#D9A441" opacity="0.9">
+              
+              
+              
+            </circle>
+
+            
+            <line x1="155" y1="155" x2="45" y2="130" stroke="rgba(217,164,65,0.3)" stroke-width="1.5"></line>
+            <circle r="4" fill="#D9A441" opacity="0.9">
+              
+              
+              
+            </circle>
+
+            
+            <line x1="155" y1="155" x2="265" y2="130" stroke="rgba(217,164,65,0.3)" stroke-width="1.5"></line>
+            <circle r="4" fill="#52B788" opacity="0.9">
+              
+              
+              
+            </circle>
+
+            
+            <circle cx="155" cy="155" r="10" fill="none" stroke="rgba(82,183,136,0.5)" stroke-width="1.5">
+              
+              
+            </circle>
+            <circle cx="155" cy="155" r="10" fill="none" stroke="rgba(82,183,136,0.35)" stroke-width="1">
+              
+              
+            </circle>
+
+            
+            
+            <circle cx="155" cy="52" r="26" fill="rgba(255,255,255,0.1)" stroke="rgba(82,183,136,0.7)" stroke-width="1.5"></circle>
+            <text x="155" y="47" text-anchor="middle" font-size="16" font-family="system-ui">♻️</text>
+            <text x="155" y="64" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.8)" font-family="system-ui">Bank Sampah</text>
+
+            
+            <circle cx="60" cy="248" r="26" fill="rgba(255,255,255,0.1)" stroke="rgba(217,164,65,0.7)" stroke-width="1.5"></circle>
+            <text x="60" y="243" text-anchor="middle" font-size="16" font-family="system-ui">🌾</text>
+            <text x="60" y="260" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.8)" font-family="system-ui">Petani</text>
+
+            
+            <circle cx="250" cy="248" r="26" fill="rgba(255,255,255,0.1)" stroke="rgba(217,164,65,0.7)" stroke-width="1.5"></circle>
+            <text x="250" y="243" text-anchor="middle" font-size="16" font-family="system-ui">🏭</text>
+            <text x="250" y="260" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.8)" font-family="system-ui">Pengolah</text>
+
+            
+            <circle cx="42" cy="130" r="26" fill="rgba(255,255,255,0.1)" stroke="rgba(82,183,136,0.5)" stroke-width="1.5"></circle>
+            <text x="42" y="125" text-anchor="middle" font-size="16" font-family="system-ui">👥</text>
+            <text x="42" y="142" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="system-ui">Komunitas</text>
+
+            
+            <circle cx="268" cy="130" r="26" fill="rgba(255,255,255,0.1)" stroke="rgba(82,183,136,0.5)" stroke-width="1.5"></circle>
+            <text x="268" y="125" text-anchor="middle" font-size="16" font-family="system-ui">🏪</text>
+            <text x="268" y="142" text-anchor="middle" font-size="8" font-weight="700" fill="rgba(255,255,255,0.7)" font-family="system-ui">UMKM</text>
+
+            
+            <circle cx="155" cy="155" r="38" fill="rgba(27,67,50,0.85)"></circle>
+            <circle cx="155" cy="155" r="38" fill="none" stroke="#52B788" stroke-width="2">
+              
+            </circle>
+            
+            <circle cx="155" cy="155" r="30" fill="none" stroke="rgba(82,183,136,0.5)" stroke-width="3" stroke-linecap="round">
+              
+            </circle>
+            <text x="155" y="150" text-anchor="middle" font-size="10" font-weight="800" fill="rgba(255,255,255,0.9)" font-family="system-ui">Decision</text>
+            <text x="155" y="164" text-anchor="middle" font-size="10" font-weight="800" fill="rgba(255,255,255,0.9)" font-family="system-ui">Engine</text>
+          </svg>
+        </div>
+      </div>
+
+      
+      <div class="de-progress-wrap">
+        <div class="de-progress-label">
+          <div class="blink-dot"></div>
+          Menghitung Recovery Score…
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill"></div>
+        </div>
+        <div class="progress-steps">
+          <div class="chip chip-green">✓ Jenis material</div>
+          <div class="chip chip-green">✓ Lokasi GPS</div>
+          <div class="chip chip-gold">⟳ Mencari mitra</div>
+          <div class="chip chip-muted">○ Hitung nilai</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="phone-wrap">
+  <div class="screen-label">09 — Recovery Recommendation</div>
+  <div class="phone">
+    <div class="status">
+      <span>9:41</span>
+      <span style="font-size:10px;color:var(--muted)">▲▲▲ WiFi 100%</span>
+    </div>
+
+    <div class="body">
+      
+      <div class="rec-hero">
+        <div class="rec-hero-label">Recovery Path · Kardus Bekas 45 kg</div>
+        <div class="rec-hero-title">3 Jalur Terbaik Ditemukan</div>
+        <div class="rec-hero-sub">Diurutkan berdasarkan Recovery Score</div>
+        <div class="rec-hero-pills">
+          <div class="rec-hero-pill">📍 Sleman, DIY</div>
+          <div class="rec-hero-pill">⚖️ 45 kg · Bersih</div>
+          <div class="rec-hero-pill">🕐 Tersedia 1-3 hari</div>
+        </div>
+      </div>
+
+      <div class="spacer-sm"></div>
+
+      
+      <div class="path-card top-pick">
+        <div class="path-card-header">
+          <div class="path-rank gold">🥇 Pilihan Terbaik</div>
+          <div class="chip chip-gold">Recovery Score Tertinggi</div>
+        </div>
+        <div class="path-mitra-row">
+          <div class="mitra-icon mi-green">♻️</div>
+          <div>
+            <div class="mitra-name">Bank Sampah Gemah Ripah</div>
+            <div class="mitra-type">Bank Sampah · Terverifikasi REVIA</div>
+          </div>
+          <div class="path-score-badge">
+            <div class="psb-val green">91</div>
+            <div class="psb-label">Score</div>
+          </div>
+        </div>
+        <div class="path-stats">
+          <div class="ps-item">
+            <div class="ps-val">Rp 4.500</div>
+            <div class="ps-label">Est. nilai/kg</div>
+          </div>
+          <div class="ps-item">
+            <div class="ps-val">2.3 km</div>
+            <div class="ps-label">Jarak</div>
+          </div>
+          <div class="ps-item">
+            <div class="ps-val">−18 kg</div>
+            <div class="ps-label">CO₂</div>
+          </div>
+        </div>
+        <div class="path-reason">
+          <strong>Mengapa ini terbaik:</strong> Jarak sangat dekat, harga kompetitif, dan mitra telah memproses 2 ton kardus bulan ini. Loop sirkular terjaga penuh.
+        </div>
+      </div>
+
+      
+      <div class="path-card">
+        <div class="path-card-header">
+          <div class="path-rank">🥈 Alternatif #2</div>
+          <div class="chip chip-muted">Nilai lebih tinggi</div>
+        </div>
+        <div class="path-mitra-row">
+          <div class="mitra-icon mi-blue">🏭</div>
+          <div>
+            <div class="mitra-name">CV Kertas Daur Prima</div>
+            <div class="mitra-type">Pengolah Industri · Bersertifikat</div>
+          </div>
+          <div class="path-score-badge">
+            <div class="psb-val amber">78</div>
+            <div class="psb-label">Score</div>
+          </div>
+        </div>
+        <div class="path-stats">
+          <div class="ps-item">
+            <div class="ps-val">Rp 5.200</div>
+            <div class="ps-label">Est. nilai/kg</div>
+          </div>
+          <div class="ps-item">
+            <div class="ps-val">12 km</div>
+            <div class="ps-label">Jarak</div>
+          </div>
+          <div class="ps-item">
+            <div class="ps-val">−14 kg</div>
+            <div class="ps-label">CO₂</div>
+          </div>
+        </div>
+        <div class="path-reason">
+          Nilai per kg lebih tinggi namun jarak lebih jauh. Cocok jika punya volume ≥ 100 kg untuk efisiensi logistik.
+        </div>
+      </div>
+
+      
+      <div class="path-card">
+        <div class="path-card-header">
+          <div class="path-rank">🥉 Alternatif #3</div>
+          <div class="chip chip-muted">Penjemputan cepat</div>
+        </div>
+        <div class="path-mitra-row">
+          <div class="mitra-icon mi-earth">🏪</div>
+          <div>
+            <div class="mitra-name">Tukang Rosok Pak Budi</div>
+            <div class="mitra-type">Pengepul Lokal · 4.8 ⭐</div>
+          </div>
+          <div class="path-score-badge">
+            <div class="psb-val" style="color:var(--alert)">62</div>
+            <div class="psb-label">Score</div>
+          </div>
+        </div>
+        <div class="path-stats">
+          <div class="ps-item">
+            <div class="ps-val">Rp 3.000</div>
+            <div class="ps-label">Est. nilai/kg</div>
+          </div>
+          <div class="ps-item">
+            <div class="ps-val">0.8 km</div>
+            <div class="ps-label">Jarak</div>
+          </div>
+          <div class="ps-item">
+            <div class="ps-val">−9 kg</div>
+            <div class="ps-label">CO₂</div>
+          </div>
+        </div>
+        <div class="path-reason">
+          Terdekat dan paling cepat dijemput (hari ini). Harga lebih rendah, CO₂ reduction minimal, namun cocok untuk kebutuhan mendesak.
+        </div>
+      </div>
+
+      <div class="spacer-sm"></div>
+      <div class="btn-primary">Pilih Jalur Terbaik →</div>
+      <div class="btn-secondary">Bandingkan Detail</div>
+      <div class="spacer-md"></div>
+    </div>
+
+    <div class="nav">
+      <div class="ni"><div class="ni-icon">🏠</div><div class="ni-lbl">Beranda</div></div>
+      <div class="ni"><div class="ni-icon">🔍</div><div class="ni-lbl">Temukan</div></div>
+      <div class="ni active"><div class="ni-icon">⚡</div><div class="ni-lbl">Jalur</div><div class="ni-dot"></div></div>
+      <div class="ni"><div class="ni-icon">💬</div><div class="ni-lbl">Pesan</div></div>
+      <div class="ni"><div class="ni-icon">👤</div><div class="ni-lbl">Profil</div></div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="phone-wrap">
+  <div class="screen-label">10 — Penjemputan Aktif</div>
+  <div class="phone">
+    <div class="status">
+      <span>9:41</span>
+      <span style="font-size:10px;color:var(--muted)">▲▲▲ WiFi 100%</span>
+    </div>
+
+    <div class="body">
+      <div class="topbar">
+        <div class="topbar-back">← Jalur Saya</div>
+        <div class="topbar-title">Penjemputan</div>
+        <div class="topbar-action">Detail</div>
+      </div>
+
+      
+      <div style="padding:12px 20px 0;display:flex;gap:8px;flex-wrap:wrap">
+        <div class="chip chip-dark">📦 Kardus 45 kg</div>
+        <div class="chip chip-green">Bank Sampah Gemah Ripah</div>
+        <div class="chip chip-gold">Score: 91</div>
+      </div>
+
+      
+      <div class="status-steps">
+        <div class="sts-item">
+          <div class="sts-circle done">✓</div>
+          <div class="sts-lbl done">Menjadwal­kan</div>
+        </div>
+        <div class="sts-item">
+          <div class="sts-circle active">🚛</div>
+          <div class="sts-lbl active">Dijemput</div>
+        </div>
+        <div class="sts-item">
+          <div class="sts-circle">✓</div>
+          <div class="sts-lbl">Diterima</div>
+        </div>
+      </div>
+
+      
+      <div class="pickup-map">
+        <svg width="335" height="190" aria-label="Peta rute penjemputan">
+          
+          <rect width="335" height="190" fill="#EAF0EC"></rect>
+          <line x1="0" y1="47" x2="335" y2="47" stroke="#D8DDD5" stroke-width="0.5"></line>
+          <line x1="0" y1="94" x2="335" y2="94" stroke="#D8DDD5" stroke-width="0.5"></line>
+          <line x1="0" y1="141" x2="335" y2="141" stroke="#D8DDD5" stroke-width="0.5"></line>
+          <line x1="80" y1="0" x2="80" y2="190" stroke="#D8DDD5" stroke-width="0.5"></line>
+          <line x1="160" y1="0" x2="160" y2="190" stroke="#D8DDD5" stroke-width="0.5"></line>
+          <line x1="240" y1="0" x2="240" y2="190" stroke="#D8DDD5" stroke-width="0.5"></line>
+
+          
+          <path d="M0,110 Q80,100 160,95 Q240,90 335,80" fill="none" stroke="#C8D5C8" stroke-width="8"></path>
+          <path d="M130,0 Q125,95 120,190" fill="none" stroke="#C8D5C8" stroke-width="6"></path>
+
+          
+          <path d="M55,140 C80,130 100,110 140,98 C180,86 230,84 275,75" fill="none" stroke="#40916C" stroke-width="2.5" stroke-linecap="round" opacity="0.85">
+            
+          </path>
+
+          
+          <circle cx="55" cy="140" r="14" fill="#1B4332" opacity="0.9"></circle>
+          <circle cx="55" cy="140" r="6" fill="white"></circle>
+          <text x="55" y="162" text-anchor="middle" font-size="9" font-weight="700" fill="#1B4332" font-family="system-ui">Anda</text>
+
+          
+          <circle cx="275" cy="75" r="14" fill="#D9A441" opacity="0.9"></circle>
+          <circle cx="275" cy="75" r="6" fill="white"></circle>
+          <text x="275" y="97" text-anchor="middle" font-size="9" font-weight="700" fill="#7A5000" font-family="system-ui">Bank Sampah</text>
+
+          
+          <text font-size="18" text-anchor="middle">
+            
+            
+            🚛
+          </text>
+
+          
+          <rect x="120" y="14" width="95" height="26" rx="8" fill="white" opacity="0.92"></rect>
+          <text x="167" y="25" text-anchor="middle" font-size="9" font-weight="700" fill="#1B1B1B" font-family="system-ui">ETA: ~12 menit</text>
+          <text x="167" y="36" text-anchor="middle" font-size="8" fill="#6B7280" font-family="system-ui">2.3 km · Jl. Kaliurang</text>
+        </svg>
+      </div>
+
+      
+      <div class="spacer-sm"></div>
+      <div class="pickup-detail-card">
+        <div class="pdc-row">
+          <div class="pdc-label">Mitra Penjemput</div>
+          <div class="pdc-val">Bank Sampah Gemah Ripah</div>
+        </div>
+        <div class="pdc-row">
+          <div class="pdc-label">Pengemudi</div>
+          <div class="pdc-val">Pak Slamet · ⭐ 4.9</div>
+        </div>
+        <div class="pdc-row">
+          <div class="pdc-label">No. Kendaraan</div>
+          <div class="pdc-val">AB 1234 XY</div>
+        </div>
+        <div class="pdc-row">
+          <div class="pdc-label">Estimasi Nilai</div>
+          <div class="pdc-val green">Rp 202.500</div>
+        </div>
+        <div class="pdc-row">
+          <div class="pdc-label">CO₂ Terhindari</div>
+          <div class="pdc-val green">−18 kg</div>
+        </div>
+      </div>
+
+      <div class="spacer-md"></div>
+      <div class="btn-primary">Hubungi Pengemudi 📞</div>
+      <div class="btn-secondary">Laporkan Masalah</div>
+      <div class="spacer-md"></div>
+    </div>
+
+    <div class="nav">
+      <div class="ni"><div class="ni-icon">🏠</div><div class="ni-lbl">Beranda</div></div>
+      <div class="ni"><div class="ni-icon">🔍</div><div class="ni-lbl">Temukan</div></div>
+      <div class="ni active"><div class="ni-icon">⚡</div><div class="ni-lbl">Jalur</div><div class="ni-dot"></div></div>
+      <div class="ni"><div class="ni-icon">💬</div><div class="ni-lbl">Pesan</div></div>
+      <div class="ni"><div class="ni-icon">👤</div><div class="ni-lbl">Profil</div></div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="phone-wrap">
+  <div class="screen-label">11 — Resource Processing</div>
+  <div class="phone">
+    <div class="status on-dark" style="background:transparent;position:relative;z-index:10">
+      <span>9:41</span>
+      <span style="font-size:10px;color:rgba(255,255,255,0.75)">▲▲▲ WiFi 100%</span>
+    </div>
+
+    <div class="body">
+      <div class="process-bg">
+        
+        <div class="process-header">
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-bottom:6px">← Jalur Pemrosesan</div>
+          <div class="process-header-title">Transformasi Resource</div>
+          <div class="process-header-sub">Sisa Sayur → Produk Bernilai Tinggi</div>
+        </div>
+
+        
+        <div style="background:var(--bg);border-radius:24px 24px 0 0;flex:1;padding:20px 0 0">
+
+          
+          <div style="padding:0 20px 16px;display:flex;gap:8px;flex-wrap:wrap">
+            <div class="chip chip-dark">🥬 Sisa Sayur 8.5 kg</div>
+            <div class="chip chip-green">CV Berkah Maggot</div>
+          </div>
+
+          <div class="timeline-wrap">
+
+            
+            <div class="tl-step">
+              <div class="tl-left">
+                <div class="tl-icon-wrap done">🥬</div>
+                <div class="tl-connector done"></div>
+              </div>
+              <div class="tl-body">
+                <div class="tl-title">Input: Sisa Sayur</div>
+                <div class="tl-sub">8.5 kg limbah organik dari pasar/rumah tangga. Dipilah, dibersihkan dari plastik dan kontaminan.</div>
+                <div class="tl-tags">
+                  <div class="chip chip-green">✓ Diterima</div>
+                  <div class="chip chip-muted">8.5 kg</div>
+                </div>
+                <div class="tl-output-box">
+                  <div style="font-size:20px">📋</div>
+                  <div>
+                    <div class="tl-output-val">Sortasi Selesai</div>
+                    <div class="tl-output-label">3 Mar 2025 · 14.22 WIB</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="tl-step">
+              <div class="tl-left">
+                <div class="tl-icon-wrap active">🪱</div>
+                <div class="tl-connector"></div>
+              </div>
+              <div class="tl-body">
+                <div class="tl-title">Proses: Budidaya Maggot BSF</div>
+                <div class="tl-sub">Larva Black Soldier Fly mengurai limbah organik selama 14 hari. Menghasilkan biomassa protein tinggi dan residu kasgot.</div>
+                <div class="tl-tags">
+                  <div class="chip chip-gold">⟳ Berlangsung</div>
+                  <div class="chip chip-muted">Hari 6 / 14</div>
+                </div>
+                
+                <div style="margin-top:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 12px">
+                  <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px">
+                    <span>Progress penguraian</span><span style="color:var(--accent)">43%</span>
+                  </div>
+                  <div class="progress-track" style="margin-bottom:0">
+                    <div class="progress-fill" style="width:43%;animation:none"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="tl-step">
+              <div class="tl-left">
+                <div class="tl-icon-wrap next">🌱</div>
+              </div>
+              <div class="tl-body">
+                <div class="tl-title muted">Output: Kasgot (Pupuk Organik)</div>
+                <div class="tl-sub" style="color:var(--border)">Residu kasgot berkualitas tinggi siap digunakan sebagai pupuk organik. Estimasi yield 2.1 kg dari 8.5 kg input.</div>
+                <div class="tl-tags">
+                  <div class="chip chip-muted">○ Est. 8 hari lagi</div>
+                  <div class="chip chip-muted">~2.1 kg output</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          
+          <div style="margin:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r16);padding:14px 16px">
+            <div class="sec-title" style="padding:0 0 10px">Rantai Nilai</div>
+            <div style="display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap">
+              <div style="text-align:center">
+                <div style="font-size:24px">🥬</div>
+                <div style="font-size:9px;font-weight:700;color:var(--muted);margin-top:2px">Sayur</div>
+                <div style="font-size:10px;font-weight:800;color:var(--text)">8.5 kg</div>
+              </div>
+              <div class="arrow-bounce" style="font-size:18px;color:var(--accent)">→</div>
+              <div style="text-align:center">
+                <div style="font-size:24px">🪱</div>
+                <div style="font-size:9px;font-weight:700;color:var(--muted);margin-top:2px">Maggot</div>
+                <div style="font-size:10px;font-weight:800;color:var(--text)">~1.4 kg</div>
+              </div>
+              <div class="arrow-bounce" style="font-size:18px;color:var(--accent)">→</div>
+              <div style="text-align:center">
+                <div style="font-size:24px">🌱</div>
+                <div style="font-size:9px;font-weight:700;color:var(--muted);margin-top:2px">Kasgot</div>
+                <div style="font-size:10px;font-weight:800;color:var(--text)">~2.1 kg</div>
+              </div>
+              <div class="arrow-bounce" style="font-size:18px;color:var(--accent)">→</div>
+              <div style="text-align:center">
+                <div style="font-size:24px">💰</div>
+                <div style="font-size:9px;font-weight:700;color:var(--muted);margin-top:2px">Nilai</div>
+                <div style="font-size:10px;font-weight:800;color:var(--secondary)">Rp 35k</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="spacer-md"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <div class="ni"><div class="ni-icon">🏠</div><div class="ni-lbl">Beranda</div></div>
+      <div class="ni"><div class="ni-icon">🔍</div><div class="ni-lbl">Temukan</div></div>
+      <div class="ni active"><div class="ni-icon">⚡</div><div class="ni-lbl">Jalur</div><div class="ni-dot"></div></div>
+      <div class="ni"><div class="ni-icon">💬</div><div class="ni-lbl">Pesan</div></div>
+      <div class="ni"><div class="ni-icon">👤</div><div class="ni-lbl">Profil</div></div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="phone-wrap">
+  <div class="screen-label">12 — Second Matching: Kasgot → Petani</div>
+  <div class="phone">
+    <div class="status on-dark" style="background:transparent;position:relative;z-index:10">
+      <span>9:41</span>
+      <span style="font-size:10px;color:rgba(255,255,255,0.75)">▲▲▲ WiFi 100%</span>
+    </div>
+
+    <div class="body">
+      
+      <div class="second-match-hero">
+        <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:4px">← Proses Selesai</div>
+        <div class="smh-title">Output Siap Disalurkan</div>
+        <div class="smh-sub">Kasgot 2.1 kg · Kualitas A · Siap kirim</div>
+      </div>
+
+      
+      <div style="padding:12px 20px 0">
+        <div class="sec-title" style="margin-bottom:8px">Rantai Sirkular Lengkap</div>
+      </div>
+      <div class="flow-chain">
+        <div class="fc-node">
+          <div class="fc-icon">🥬</div>
+          <div class="fc-name">Sayur</div>
+        </div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-node">
+          <div class="fc-icon">🪱</div>
+          <div class="fc-name">Maggot</div>
+        </div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-node">
+          <div class="fc-icon">🌱</div>
+          <div class="fc-name">Kasgot</div>
+        </div>
+        <div class="fc-arrow" style="color:var(--secondary)">→</div>
+        <div class="fc-node">
+          <div class="fc-icon">🌾</div>
+          <div class="fc-name" style="color:var(--secondary)">Petani</div>
+        </div>
+      </div>
+
+      
+      <div style="padding:14px 20px 6px">
+        <div class="sec-title">Status Pengiriman Kasgot</div>
+      </div>
+      <div class="status-steps" style="padding:10px 20px 14px">
+        <div class="sts-item">
+          <div class="sts-circle done">✓</div>
+          <div class="sts-lbl done">Pemrosesan Selesai</div>
+        </div>
+        <div class="sts-item">
+          <div class="sts-circle active">🚐</div>
+          <div class="sts-lbl active">Pengiriman ke Petani</div>
+        </div>
+        <div class="sts-item">
+          <div class="sts-circle">✓</div>
+          <div class="sts-lbl">Diterima Petani</div>
+        </div>
+      </div>
+
+      
+      <div class="sm-map">
+        <svg width="335" height="175" aria-label="Rute pengiriman kasgot ke petani">
+          <rect width="335" height="175" fill="#F0EDE5"></rect>
+          
+          <line x1="0" y1="43" x2="335" y2="43" stroke="#D8DDD5" stroke-width="0.5"></line>
+          <line x1="0" y1="86" x2="335" y2="86" stroke="#D8DDD5" stroke-width="0.5"></line>
+          <line x1="0" y1="130" x2="335" y2="130" stroke="#D8DDD5" stroke-width="0.5"></line>
+          <line x1="83" y1="0" x2="83" y2="175" stroke="#D8DDD5" stroke-width="0.5"></line>
+          <line x1="166" y1="0" x2="166" y2="175" stroke="#D8DDD5" stroke-width="0.5"></line>
+          <line x1="249" y1="0" x2="249" y2="175" stroke="#D8DDD5" stroke-width="0.5"></line>
+          
+          <path d="M0,100 Q100,90 200,85 Q280,82 335,78" fill="none" stroke="#DDD5C0" stroke-width="8"></path>
+          
+          <path d="M50,128 C90,118 130,100 180,90 C220,82 260,78 285,70" fill="none" stroke="#D9A441" stroke-width="2.5" stroke-linecap="round">
+            
+          </path>
+          
+          <circle cx="50" cy="128" r="13" fill="#40916C" opacity="0.9"></circle>
+          <circle cx="50" cy="128" r="5" fill="white"></circle>
+          <text x="50" y="149" text-anchor="middle" font-size="8" font-weight="700" fill="#1B4332" font-family="system-ui">Pengolah</text>
+          
+          <circle cx="285" cy="70" r="13" fill="#D9A441" opacity="0.95"></circle>
+          <circle cx="285" cy="70" r="5" fill="white"></circle>
+          <text x="285" y="91" text-anchor="middle" font-size="8" font-weight="700" fill="#7A5000" font-family="system-ui">Petani Sari</text>
+          
+          <text font-size="16" text-anchor="middle">
+            
+            
+            🛻
+          </text>
+          
+          <rect x="115" y="12" width="105" height="24" rx="7" fill="white" opacity="0.9"></rect>
+          <text x="167" y="28" text-anchor="middle" font-size="9" font-weight="700" fill="#1B1B1B" font-family="system-ui">Kasgot 2.1 kg · 4.8 km</text>
+        </svg>
+      </div>
+
+      
+      <div class="petani-benefit">
+        <div class="pb-icon">🌾</div>
+        <div>
+          <div class="pb-title">Manfaat untuk Petani Sari</div>
+          <div class="pb-body">Kasgot organik meningkatkan kesuburan tanah 40%, mengurangi penggunaan pupuk kimia, dan menghemat Rp 28.000/kg vs pupuk pasar.</div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <div class="chip chip-green">+40% kesuburan tanah</div>
+            <div class="chip chip-gold">Hemat Rp 58.800</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spacer-md"></div>
+      <div class="btn-primary">Konfirmasi Penerimaan ✓</div>
+      <div class="spacer-md"></div>
+    </div>
+
+    <div class="nav">
+      <div class="ni"><div class="ni-icon">🏠</div><div class="ni-lbl">Beranda</div></div>
+      <div class="ni"><div class="ni-icon">🔍</div><div class="ni-lbl">Temukan</div></div>
+      <div class="ni active"><div class="ni-icon">⚡</div><div class="ni-lbl">Jalur</div><div class="ni-dot"></div></div>
+      <div class="ni"><div class="ni-icon">💬</div><div class="ni-lbl">Pesan</div></div>
+      <div class="ni"><div class="ni-icon">👤</div><div class="ni-lbl">Profil</div></div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="phone-wrap">
+  <div class="screen-label">13 — Impact Portfolio</div>
+  <div class="phone">
+    <div class="status on-dark" style="background:transparent;position:relative;z-index:10">
+      <span>9:41</span>
+      <span style="font-size:10px;color:rgba(255,255,255,0.75)">▲▲▲ WiFi 100%</span>
+    </div>
+
+    <div class="body">
+      
+      <div class="impact-hero">
+        <div class="ih-label">Portofolio Dampak Lingkungan</div>
+        <div class="ih-title">Kontribusi Anda</div>
+        <div class="ih-sub">Januari–Maret 2025 · Toko Maju Jaya</div>
+      </div>
+
+      
+      <div class="ring-section">
+        <div class="ring-wrap">
+          <svg class="ring-svg" aria-label="Circularity Score 79">
+            <circle class="ring-track" cx="55" cy="55" r="40"></circle>
+            <circle class="ring-fill" cx="55" cy="55" r="40"></circle>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-val">79</div>
+            <div class="ring-label">Circularity</div>
+          </div>
+        </div>
+        <div class="ring-meta">
+          <div class="ring-meta-title">Circularity Score</div>
+          <div class="ring-meta-sub">Skor keberhasilan menutup loop sirkular Anda. Target bulan ini: 85.</div>
+          <div class="ring-meta-bar-wrap">
+            <div class="ring-meta-bar-label">
+              <span>Progress ke target</span><span>79 / 85</span>
+            </div>
+            <div class="ring-bar-track">
+              <div class="ring-bar-fill" style="width:93%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="impact-tiles">
+        <div class="impact-tile">
+          <div class="it-icon">🌱</div>
+          <div class="it-val">3.2 t</div>
+          <div class="it-label">CO₂ Dihindari</div>
+          <div class="it-delta">↑ +340 kg bulan ini</div>
+        </div>
+        <div class="impact-tile">
+          <div class="it-icon">♻️</div>
+          <div class="it-val">8.4 t</div>
+          <div class="it-label">Material Tersalurkan</div>
+          <div class="it-delta">↑ +1.2 t bulan ini</div>
+        </div>
+        <div class="impact-tile">
+          <div class="it-icon">💰</div>
+          <div class="it-val">Rp 18.6 jt</div>
+          <div class="it-label">Nilai Terpulihkan</div>
+          <div class="it-delta">↑ +22% vs bulan lalu</div>
+        </div>
+        <div class="impact-tile">
+          <div class="it-icon">🤝</div>
+          <div class="it-val">47</div>
+          <div class="it-label">Match Selesai</div>
+          <div class="it-delta">Peringkat #12 di DIY</div>
+        </div>
+      </div>
+
+      
+      <div class="journey-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div class="sec-title">Jalur Recovery Q1 2025</div>
+          <div class="sec-link">Lihat semua</div>
+        </div>
+        <div class="journey-scroll">
+          <div class="journey-node">
+            <div class="jn-icon-wrap jn-done">🥬</div>
+            <div class="jn-label">Sayur<br />8.5 kg</div>
+          </div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-node">
+            <div class="jn-icon-wrap jn-done">🪱</div>
+            <div class="jn-label">Maggot<br />1.4 kg</div>
+          </div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-node">
+            <div class="jn-icon-wrap jn-done">🌱</div>
+            <div class="jn-label">Kasgot<br />2.1 kg</div>
+          </div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-node">
+            <div class="jn-icon-wrap jn-done">🌾</div>
+            <div class="jn-label">Petani<br />Diterima</div>
+          </div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-node">
+            <div class="jn-icon-wrap jn-done">📦</div>
+            <div class="jn-label">Kardus<br />45 kg</div>
+          </div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-node">
+            <div class="jn-icon-wrap jn-active">🔄</div>
+            <div class="jn-label" style="color:var(--accent)">Daur Ulang<br />Aktif</div>
+          </div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-node">
+            <div class="jn-icon-wrap jn-future">🏭</div>
+            <div class="jn-label">Produk<br />Baru</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="sec-hdr" style="padding-top:14px">
+        <div class="sec-title">SDG yang Didukung</div>
+      </div>
+      <div class="sdg-row">
+        <div class="sdg-badge sdg-11">
+          <div class="sdg-num">11</div>
+          <div class="sdg-title">Kota &amp; Komunitas Berkelanjutan</div>
+        </div>
+        <div class="sdg-badge sdg-12">
+          <div class="sdg-num">12</div>
+          <div class="sdg-title">Konsumsi &amp; Produksi Bertanggung Jawab</div>
+        </div>
+        <div class="sdg-badge sdg-13">
+          <div class="sdg-num">13</div>
+          <div class="sdg-title">Penanganan Perubahan Iklim</div>
+        </div>
+      </div>
+
+      <div class="spacer-md"></div>
+      <div class="btn-primary">Unduh Laporan Dampak PDF</div>
+      <div class="spacer-md"></div>
+    </div>
+
+    <div class="nav">
+      <div class="ni"><div class="ni-icon">🏠</div><div class="ni-lbl">Beranda</div></div>
+      <div class="ni"><div class="ni-icon">🔍</div><div class="ni-lbl">Temukan</div></div>
+      <div class="ni"><div class="ni-icon">⚡</div><div class="ni-lbl">Jalur</div></div>
+      <div class="ni active"><div class="ni-icon">🌿</div><div class="ni-lbl">Dampak</div><div class="ni-dot"></div></div>
+      <div class="ni"><div class="ni-icon">👤</div><div class="ni-lbl">Profil</div></div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="phone-wrap">
+  <div class="screen-label">14 — Profil &amp; Pengaturan</div>
+  <div class="phone">
+    <div class="status on-dark" style="background:transparent;position:relative;z-index:10">
+      <span>9:41</span>
+      <span style="font-size:10px;color:rgba(255,255,255,0.75)">▲▲▲ WiFi 100%</span>
+    </div>
+
+    <div class="body">
+      
+      <div class="profile-hero">
+        <div class="profile-avatar">TM</div>
+        <div class="profile-info">
+          <div class="profile-name">Toko Maju Jaya</div>
+          <div class="profile-handle">@toko.majujaya · Sleman, DIY</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.55);margin-top:2px">Member sejak Januari 2024</div>
+          <div class="profile-badges">
+            <div class="profile-badge">🏪 UMKM</div>
+            <div class="profile-badge">✅ Terverifikasi</div>
+            <div class="profile-badge">⭐ Reclaimer</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="profile-stats">
+        <div class="pst-item">
+          <div class="pst-val">79</div>
+          <div class="pst-label">Skor</div>
+        </div>
+        <div class="pst-item">
+          <div class="pst-val">47</div>
+          <div class="pst-label">Match</div>
+        </div>
+        <div class="pst-item">
+          <div class="pst-val">8.4 t</div>
+          <div class="pst-label">Tersalurkan</div>
+        </div>
+        <div class="pst-item">
+          <div class="pst-val">3.2 t</div>
+          <div class="pst-label">CO₂ Saved</div>
+        </div>
+      </div>
+
+      
+      <div class="sec-hdr">
+        <div class="sec-title">Riwayat Dampak</div>
+        <div class="sec-link">Semua</div>
+      </div>
+
+      <div class="history-item">
+        <div class="hi-icon fi-green" style="background:var(--success-lt)">♻️</div>
+        <div class="hi-body">
+          <div class="hi-title">Kardus → Bank Sampah Gemah Ripah</div>
+          <div class="hi-sub">45 kg · 3 Mar 2025 · −18 kg CO₂</div>
+        </div>
+        <div class="hi-val">Rp 202.5k</div>
+      </div>
+
+      <div class="history-item">
+        <div class="hi-icon" style="background:#F0EDE5">🌱</div>
+        <div class="hi-body">
+          <div class="hi-title">Kasgot → Petani Sari</div>
+          <div class="hi-sub">2.1 kg · 28 Feb 2025 · Loop tertutup</div>
+        </div>
+        <div class="hi-val">Rp 35k</div>
+      </div>
+
+      <div class="history-item">
+        <div class="hi-icon" style="background:var(--alert-lt)">🪱</div>
+        <div class="hi-body">
+          <div class="hi-title">Sayur → CV Berkah Maggot</div>
+          <div class="hi-sub">8.5 kg · 14 Feb 2025 · Sedang proses</div>
+        </div>
+        <div class="hi-val" style="color:var(--accent)">Pending</div>
+      </div>
+
+      <div class="divider"></div>
+
+      
+      <div class="sec-hdr">
+        <div class="sec-title">Pengaturan Akun</div>
+      </div>
+
+      <div class="settings-item">
+        <div class="si-icon">👤</div>
+        <div class="si-label">Edit Profil</div>
+        <div class="si-arrow">›</div>
+      </div>
+      <div class="settings-item">
+        <div class="si-icon">📍</div>
+        <div class="si-label">Kelola Lokasi</div>
+        <div class="si-val">Sleman, DIY</div>
+        <div class="si-arrow">›</div>
+      </div>
+      <div class="settings-item">
+        <div class="si-icon">🔔</div>
+        <div class="si-label">Notifikasi Match</div>
+        <div class="toggle"></div>
+      </div>
+      <div class="settings-item">
+        <div class="si-icon">🔔</div>
+        <div class="si-label">Update Pemrosesan</div>
+        <div class="toggle"></div>
+      </div>
+      <div class="settings-item">
+        <div class="si-icon">🌙</div>
+        <div class="si-label">Mode Gelap</div>
+        <div class="toggle off"></div>
+      </div>
+      <div class="settings-item">
+        <div class="si-icon">🛡️</div>
+        <div class="si-label">Privasi &amp; Data</div>
+        <div class="si-arrow">›</div>
+      </div>
+      <div class="settings-item">
+        <div class="si-icon">❓</div>
+        <div class="si-label">Bantuan &amp; FAQ</div>
+        <div class="si-arrow">›</div>
+      </div>
+      <div class="settings-item" style="border-bottom:none">
+        <div class="si-icon" style="background:var(--alert-lt)">📋</div>
+        <div class="si-label">Versi Aplikasi</div>
+        <div class="si-val">v2.1.0</div>
+      </div>
+
+      <div class="btn-logout">Keluar dari Akun</div>
+    </div>
+
+    <div class="nav">
+      <div class="ni"><div class="ni-icon">🏠</div><div class="ni-lbl">Beranda</div></div>
+      <div class="ni"><div class="ni-icon">🔍</div><div class="ni-lbl">Temukan</div></div>
+      <div class="ni"><div class="ni-icon">⚡</div><div class="ni-lbl">Jalur</div></div>
+      <div class="ni"><div class="ni-icon">🌿</div><div class="ni-lbl">Dampak</div></div>
+      <div class="ni active"><div class="ni-icon">👤</div><div class="ni-lbl">Profil</div><div class="ni-dot"></div></div>
+    </div>
+  </div>
+</div>
+
+<footer style="width:100%;text-align:center;padding:28px 0 12px;font-size:11px;color:rgba(244,241,234,0.35);font-family:var(--font);border-top:1px solid rgba(244,241,234,0.12);margin-top:24px">
+  Made with IBM Bob
+</footer>
+
+</body>
+</html>
